@@ -28,10 +28,9 @@ module.exports = (resources) => {
 
     async function load(input={}) {
       const config = {}
-      // config.var1 = input.var1
-      // ...
-      // config.config1 = await bundled_config.config('CONFIG1')
-      // ...
+      config.files = input.files || [];
+      config.scanned_files = input.scanned_files || [];
+      config.errored_files = input.errored_files ||  [];
       return config
     }
     
