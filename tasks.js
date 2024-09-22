@@ -41,12 +41,26 @@ module.exports = (resources) => {
     }
 
     async function validate(config) {
-      ;[
-        // [variable, "display name"],
-      ].forEach(([item, name]) => { if (!item) { throw new Error( 'MissingInput: ' + name )}})
-      return config
+      const { files, scanned_files, errored_files } = { ...config };
+      if (
+        !Array.isArray(files) ||
+        !Array.isArray(scanned_files) ||
+        !Array.isArray(errored_files)
+      ) {
+        throw new Error(shared.ERR_INVALID_TYPE);
+      }
+      if (files.length === 0) {
+        throw new Error(shared.ERR_EMPTY_FILES);
+      }
+      files.forEach((file, index) => {
+        if (!file) {
+          throw new Error(`${shared.ERR_MISSING_INPUT} at index: ${index}`);
+        }
+      });
+      
+      return config;
     }
-  }
+  };
 
   return my
 }
