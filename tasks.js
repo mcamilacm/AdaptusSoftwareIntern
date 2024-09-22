@@ -11,23 +11,24 @@ module.exports = (resources) => {
   // ============================================================================
 
   my.run = async (input) => {
-    const { bundled_config, _debug } = resources
+    const { s3_driver, _debug } = resources
     let output = {}
 
     try {
       const data = await setup(await validate( await load(input)))
-      // business logic goes here...
-      // output = ...
+      const notScannedFiles = data.files.filter(
+        (file) =>
+          !data.scanned_files.includes(file) &&
+          !data.errored_files.includes(file)
+      );
+      await s3_driver.add("adaptus/path", notScannedFiles);
+      output = notScannedFiles
     } catch (e) { 
-      // if (e.message === ...
-      //   throw new Error('...
-      // }
-      // Default case
       _debug(e.stack)
-      throw (e)
+      output = { status: 'An error ocurred', message: e.message }
     }
 
-    return output
+    return output;
 
     async function load(input={}) {
       const config = {}
