@@ -2,8 +2,8 @@ const tasks = require("./tasks.js");
 
 const s3_driver = {
   add: async (path, data) => {
-    console.log(`Uploading files to S3 ${path}`);
-    console.log(`Data ${JSON.stringify(data)}`);
+    console.log(`Uploading files to S3: ${path}`);
+    console.log(`Data: ${JSON.stringify(data)}`);
 
     return Promise.resolve();
   },
