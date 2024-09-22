@@ -1,6 +1,9 @@
 module.exports = (resources) => {
   const my = {}
   const shared = {
+    ERR_INVALID_TYPE: "Invalid input type, it should be an array",
+    ERR_EMPTY_FILES: `Missing files data, it shouldn't be empty`,
+    ERR_MISSING_INPUT: "Input value is missing",
     // SHARED_VAR: value
     // ...
   }
@@ -41,7 +44,7 @@ module.exports = (resources) => {
     }
 
     async function validate(config) {
-      const { files, scanned_files, errored_files } = { ...config };
+      const { files, scanned_files, errored_files } = { ...config }; 
       if (
         !Array.isArray(files) ||
         !Array.isArray(scanned_files) ||
